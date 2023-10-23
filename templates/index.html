@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Landing Page</title>
+    <!-- Add Bootstrap CSS link -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Add your custom CSS styles here */
+        /* For example, you can style the hero section background */
+        .hero-section {
+            background-color: #f0f0f0;
+            padding: 60px 0;
+            min-height: calc(100vh - 130px);
+            /* Adjust as needed */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Ensure footer is always at the bottom */
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .footer {
+            margin-top: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    {% include "includes/navbar.html" %}
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="{{ url_for('static', filename='img/novel.png') }}" alt="Image" class="img-fluid">
+                </div>
+                <div class="col-md-6">
+                    <h1>Sistem Rekomendasi</h1>
+                    <p>
+                        Sistem rekomendasi merupakan suatu aplikasi untuk menyediakan dan
+                        merekomendasikan suatu item dalam membuat suatu keputusan yang
+                        diinginkan oleh pengguna.
+                        <br>
+                        <br>
+                        Pada sistem ini, website menyediakan
+                        sistem untuk merekomendasikan novel kepada pengguna
+                    </p>
+                    <a href="#" class="btn btn-primary w-100">Cari Rekomendasi Novel</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    {% include "includes/footer.html" %}
+
+    <!-- Add Bootstrap JS scripts (jQuery and Popper.js required) -->
+    {% include "includes/script.html" %}
+</body>
+
+</html>
