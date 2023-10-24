@@ -61,7 +61,7 @@ indices = pd.Series(data.index, index=data['Title']).drop_duplicates()
 
 def rec_pvdbow(title, data=data):
     recommendation = pd.DataFrame(
-        columns=['Title', 'Description', 'Genre', 'Author', 'Cover', 'Detail'])
+        columns=['Title', 'Description', 'Genre', 'Author', 'Cover', 'Score', 'Detail'])
     count = 0
 
     idx = indices[title]
@@ -75,8 +75,8 @@ def rec_pvdbow(title, data=data):
         recommendation.at[count, 'Description'] = data['Description'].iloc[i]
         recommendation.at[count, 'Genre'] = data['Genre'].iloc[i]
         recommendation.at[count, 'Author'] = data['Author'].iloc[i]
-        # Include the cover image URL
         recommendation.at[count, 'Cover'] = data['Cover'].iloc[i]
+        recommendation.at[count, 'Score'] = sim_scores[count][1]
         recommendation.at[count, 'Detail'] = data['Detail'].iloc[i]
         count += 1
 

@@ -1,6 +1,7 @@
 import random
 from flask import Flask, render_template, request
 import module as md
+import pandas as pd
 
 app = Flask(__name__)
 
@@ -19,39 +20,43 @@ def rekomendasi():
 def hasil_rekomendasi():
     if request.method == "POST":
         judul = request.form["judul"]
-        recommendation = md.rec_pvdbow(title=judul)
-        if recommendation is not None and not recommendation.empty:
-            return render_template("hasil_rekomendasi.html", recommendation=recommendation, judul=judul)
-        else:
+        try:
+            recommendation = md.rec_pvdbow(title=judul)
+            if recommendation is not None and not recommendation.empty:
+                return render_template("hasil_rekomendasi.html", recommendation=recommendation, judul=judul)
+        except KeyError:
             return render_template("rekomendasi.html", error="Judul novel yang dicari tidak ada")
     else:
         return render_template("index.html")
 
 
-# Sample data for random titles, image URLs, and detail URLs
-random_titles = ["Novel A", "Novel B", "Novel C", "Novel D", "Novel E"]
-random_image_urls = ["novel1.jpg", "novel2.jpg",
-                     "novel3.jpg", "novel4.jpg", "novel5.jpg"]
-random_detail_urls = ["detail1.html", "detail2.html",
-                      "detail3.html", "detail4.html", "detail5.html"]
+# # Sample data for random titles, image URLs, and detail URLs
+# random_titles = ["Novel A", "Novel B", "Novel C", "Novel D", "Novel E"]
+# random_image_urls = ["novel1.jpg", "novel2.jpg",
+#                      "novel3.jpg", "novel4.jpg", "novel5.jpg"]
+# random_detail_urls = ["detail1.html", "detail2.html",
+#                       "detail3.html", "detail4.html", "detail5.html"]
 
-# Generate 100 random novels
-novels = []
-for i in range(100):
-    novel = {
-        'id': i + 1,
-        'title': random.choice(random_titles),
-        'imageUrl': "https://cn-e-pic.mangatoon.mobi/cartoon-posters/258680736e8.webp-posterup4",
-        'detailUrl': random.choice(random_detail_urls),
-    }
-    novels.append(novel)
+# # Generate 100 random novels
+# novels = []
+# for i in range(100):
+#     novel = {
+#         'id': i + 1,
+#         'title': random.choice(random_titles),
+#         'imageUrl': "https://cn-e-pic.mangatoon.mobi/cartoon-posters/258680736e8.webp-posterup4",
+#         'detailUrl': random.choice(random_detail_urls),
+#     }
+#     novels.append(novel)
 
-# Pass the generated novels to the Flask route
+# # Pass the generated novels to the Flask route
 
 
 @app.route("/list_novel")
 def list_novel():
-    return render_template("list_novel.html", novels=novels)
+    novels = pd.read_csv("novel_data.csv")
+    # Convert DataFrame to a JSON string
+    novels_json = novels.to_json(orient="records")
+    return render_template("list_novel.html", novels=novels_json)
 
 
 @app.route("/detail_page/<int:novel_id>")
@@ -75,6 +80,12 @@ def detail_page(novel_id):
     }
 
     return render_template("detail_page.html", novel=sample_novel)
+
+
+@app.route("/data_novel")
+def data_novel():
+    df = pd.read_csv('novel_data.csv')
+    return render_template('data_novel.html', df=df)
 
 
 if __name__ == "__main__":
