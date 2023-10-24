@@ -1,5 +1,6 @@
 import random
 from flask import Flask, render_template, request
+import module as md
 
 app = Flask(__name__)
 
@@ -11,10 +12,20 @@ def index():
 
 @app.route("/rekomendasi", methods=["GET", "POST"])
 def rekomendasi():
+    return render_template("rekomendasi.html")
+
+
+@app.route("/hasil_rekomendasi", methods=["POST"])
+def hasil_rekomendasi():
     if request.method == "POST":
-        return render_template("hasil_rekomendasi.html")
+        judul = request.form["judul"]
+        recommendation = md.rec_pvdbow(title=judul)
+        if recommendation is not None and not recommendation.empty:
+            return render_template("hasil_rekomendasi.html", recommendation=recommendation, judul=judul)
+        else:
+            return render_template("rekomendasi.html", error="Judul novel yang dicari tidak ada")
     else:
-        return render_template("rekomendasi.html")
+        return render_template("index.html")
 
 
 # Sample data for random titles, image URLs, and detail URLs

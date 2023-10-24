@@ -17,7 +17,7 @@
                         <a class="nav-link" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/daftar_novel">Data Novel</a>
+                        <a class="nav-link" href="/data_novel">Data Novel</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/rekomendasi">Kembali</a>
@@ -32,12 +32,38 @@
             <div class="row text-center">
                 <div class="col-lg-12">
                     <h2>Rekomendasi Novel</h2>
-                    <p>{judul}</p>
-                </div>
-            </div>
-            <div class="row text-center align-items-center">
-                <div class="col-lg-12">
-                    <p>test</p>
+
+                    <table class="table table-striped table-responsive">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Author</th>
+                                <th>Genre</th>
+                                <th>Description</th>
+                                <th>Cover</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for index, row in recommendation.iterrows() %}
+                            <tr>
+                                <td>{{ row['Title'] }}</td>
+                                <td>{{ row['Author'] }}</td>
+                                <td>{{ row['Genre'] }}</td>
+                                <td>{{ row['Description'] }}</td>
+                                <td><img src="{{ row['Cover'] }}" alt="{{ row['Title'] }} Cover" width="100"></td>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <a href="{{ row['Detail'] }}" class="btn btn-primary mx-1" target="_blank">View
+                                            Details</a>
+                                        <button class="btn btn-success mx-1">Like</button>
+                                        <button class="btn btn-danger mx-1">Dislike</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
