@@ -43,5 +43,28 @@ def list_novel():
     return render_template("list_novel.html", novels=novels)
 
 
+@app.route("/detail_page/<int:novel_id>")
+def detail_page(novel_id):
+    # Fetch the details of the novel with the given novel_id from your data source (e.g., database)
+    # You can use the novel_id to retrieve specific novel details
+
+    # Example: Fetch novel details from a database (replace with your data retrieval logic)
+    # novel = fetch_novel_details(novel_id)
+
+    # Render the detail_page.html template and pass the novel details to it
+    # Example: return render_template("detail_page.html", novel=novel)
+
+    # For demonstration purposes, we'll use a sample novel object
+    sample_novel = {
+        'id': novel_id,
+        'title': 'Sample Novel',
+        'author': 'John Doe',
+        'description': 'This is a sample novel description.',
+        'image_url': 'sample_novel.jpg',
+    }
+
+    return render_template("detail_page.html", novel=sample_novel)
+
+
 if __name__ == "__main__":
     app.run()

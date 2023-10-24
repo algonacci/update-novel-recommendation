@@ -42,23 +42,23 @@
 
             novels.forEach(novel => {
                 const modalHtml = `
-                    <div class="modal fade" id="myModal${novel.id}">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">${novel.title}</h4>
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                </div>
-                                <div class="modal-body">
-                                    <img src="${novel.imageUrl}" alt="Novel Cover" class="img-fluid">
-                                </div>
-                                <div class="modal-footer">
-                                    <a href="${novel.detailUrl}" class="btn btn-primary">Detail</a>
-                                </div>
-                            </div>
+            <div class="modal fade" id="myModal${novel.id}">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">${novel.title}</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <img src="${novel.imageUrl}" alt="Novel Cover" class="img-fluid">
+                        </div>
+                        <div class="modal-footer">
+                            <a href="/detail_page/${novel.id}" class="btn btn-primary">View Details</a>
                         </div>
                     </div>
-                `;
+                </div>
+            </div>
+        `;
 
                 dynamicModals.append(modalHtml);
             });
