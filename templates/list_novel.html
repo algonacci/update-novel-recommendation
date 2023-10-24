@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include "includes/head.html" %}
+
+<body>
+    {% include "includes/navbar.html" %}
+
+    <div class="hero-section">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-lg-12">
+                    <h2>List Novel</h2>
+                    <p>Pilih salah satu sampul novel untuk melihat lebih detail novel yang diinginkan</p>
+                </div>
+
+                {% for novel in novels %}
+                <div class="col-md-2 mb-4">
+                    <img src="{{ novel.imageUrl }}" alt="{{ novel.title }}" class="img-fluid novel-image"
+                        data-toggle="modal" data-target="#myModal{{ novel.id }}">
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Dynamic Modals Container -->
+    <div id="dynamicModals">
+        <!-- Modals will be added here dynamically -->
+    </div>
+
+    {% include "includes/footer.html" %}
+
+    <!-- Bootstrap and jQuery scripts (include your script.html as needed) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        // Function to create and show dynamic modals
+        function createDynamicModals(novels) {
+            const dynamicModals = $('#dynamicModals');
+
+            novels.forEach(novel => {
+                const modalHtml = `
+                    <div class="modal fade" id="myModal${novel.id}">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">${novel.title}</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <div class="modal-body">
+                                    <img src="${novel.imageUrl}" alt="Novel Cover" class="img-fluid">
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="${novel.detailUrl}" class="btn btn-primary">Detail</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                dynamicModals.append(modalHtml);
+            });
+        }
+
+        // Attach a click event to the novel cover images
+        $(document).on('click', '.novel-image', function () {
+            // Get the ID of the clicked image to show the corresponding modal
+            const novelId = $(this).data('target').substring(7); // Extract the ID from data-target
+
+            // Show the modal corresponding to the clicked image
+            $(`#myModal${novelId}`).modal('show');
+        });
+
+        // Get the list of novels passed from the backend
+        const novels = {{ novels | tojson | safe }};
+
+        // Create dynamic modals when the page loads
+        createDynamicModals(novels);
+    </script>
+</body>
+
+</html>
