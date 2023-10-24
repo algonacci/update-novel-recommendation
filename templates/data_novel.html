@@ -34,8 +34,8 @@
                         <div class="btn-group" role="group">
                             <a href="{{ row['Detail'] }}" class="btn btn-primary mx-1" target="_blank">View
                                 Details</a>
-                            <button class="btn btn-success mx-1">Like</button>
-                            <button class="btn btn-danger mx-1">Dislike</button>
+                            <button class="btn btn-success mx-1 like-button">Like</button>
+                            <button class="btn btn-danger mx-1 dislike-button">Dislike</button>
                         </div>
                     </td>
                 </tr>
@@ -44,13 +44,34 @@
         </table>
     </div>
     {% include "includes/footer.html" %}
-
     {% include "includes/script.html" %}
 
     <script>
         $(document).ready(function () {
             // Initialize DataTables with your table
             $('#novelTable').DataTable();
+        });
+
+        document.querySelectorAll('.like-button').forEach(item => {
+            item.addEventListener('click', function () {
+                Swal.fire({
+                    title: 'Liked!',
+                    text: 'You have liked this novel.',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+            });
+        });
+
+        document.querySelectorAll('.dislike-button').forEach(item => {
+            item.addEventListener('click', function () {
+                Swal.fire({
+                    title: 'Disliked!',
+                    text: 'You have disliked this novel.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            });
         });
     </script>
 

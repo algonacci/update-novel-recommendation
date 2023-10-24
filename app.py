@@ -1,4 +1,4 @@
-import random
+import os
 from flask import Flask, render_template, request
 import module as md
 import pandas as pd
@@ -30,56 +30,38 @@ def hasil_rekomendasi():
         return render_template("index.html")
 
 
-# # Sample data for random titles, image URLs, and detail URLs
-# random_titles = ["Novel A", "Novel B", "Novel C", "Novel D", "Novel E"]
-# random_image_urls = ["novel1.jpg", "novel2.jpg",
-#                      "novel3.jpg", "novel4.jpg", "novel5.jpg"]
-# random_detail_urls = ["detail1.html", "detail2.html",
-#                       "detail3.html", "detail4.html", "detail5.html"]
-
-# # Generate 100 random novels
-# novels = []
-# for i in range(100):
-#     novel = {
-#         'id': i + 1,
-#         'title': random.choice(random_titles),
-#         'imageUrl': "https://cn-e-pic.mangatoon.mobi/cartoon-posters/258680736e8.webp-posterup4",
-#         'detailUrl': random.choice(random_detail_urls),
-#     }
-#     novels.append(novel)
-
-# # Pass the generated novels to the Flask route
-
-
 @app.route("/list_novel")
 def list_novel():
     novels = pd.read_csv("novel_data.csv")
-    # Convert DataFrame to a JSON string
-    novels_json = novels.to_json(orient="records")
-    return render_template("list_novel.html", novels=novels_json)
+    novels = novels.to_dict(orient="records")
+
+    # Add an ID field to each dictionary
+    for i, novel in enumerate(novels):
+        novel['id'] = i
+
+    return render_template("list_novel.html", novels=novels)
 
 
 @app.route("/detail_page/<int:novel_id>")
 def detail_page(novel_id):
-    # Fetch the details of the novel with the given novel_id from your data source (e.g., database)
-    # You can use the novel_id to retrieve specific novel details
+    novels = pd.read_csv("novel_data.csv")
+    novels = novels.to_dict(orient="records")
 
-    # Example: Fetch novel details from a database (replace with your data retrieval logic)
-    # novel = fetch_novel_details(novel_id)
+    # Assign IDs as you did in the list_novel function
+    for i, novel in enumerate(novels):
+        novel['id'] = i
 
-    # Render the detail_page.html template and pass the novel details to it
-    # Example: return render_template("detail_page.html", novel=novel)
+    # Find the novel with the given 'id'
+    selected_novel = None
+    for novel in novels:
+        if novel['id'] == novel_id:
+            selected_novel = novel
+            break
 
-    # For demonstration purposes, we'll use a sample novel object
-    sample_novel = {
-        'id': novel_id,
-        'title': 'Sample Novel',
-        'author': 'John Doe',
-        'description': 'This is a sample novel description.',
-        'image_url': 'sample_novel.jpg',
-    }
+    if selected_novel is None:
+        return "Novel not found", 404
 
-    return render_template("detail_page.html", novel=sample_novel)
+    return render_template("detail_page.html", novel=selected_novel)
 
 
 @app.route("/data_novel")
@@ -89,4 +71,6 @@ def data_novel():
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True,
+            host="0.0.0.0",
+            port=int(os.environ.get("PORT", 8080)))
