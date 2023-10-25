@@ -1,79 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
-  {% include "includes/head.html" %}
+{% include "includes/head.html" %}
 
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container">
-        <a class="navbar-brand" href="/">RESYSTEM</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="/">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/data_novel">Data Novel</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/list_novel">Kembali</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-
-    <div class="container mt-5">
-      <div class="row">
-        <div class="col-md-4">
-          <img src="{{ novel.Cover }}" alt="{{ novel.Title }}" class="img-fluid" />
-          <div class="d-flex justify-content-center mt-2">
-            <div class="btn-group" role="group">
-              <button id="like-button" class="btn btn-success mx-1">Like</button>
-              <button id="dislike-button" class="btn btn-danger mx-1">Dislike</button>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <p><strong>Rating:</strong></p>
-          <p class="rating">{{ novel.Rating }}</p>
-          <p><strong>Judul</strong></p>
-          <p>{{ novel.Title }}</p>
-          <p><strong>Deskripsi</strong></p>
-          <p>{{ novel.Description }}</p>
-        </div>
-        <div class="col-md-4">
-          <p><strong>Author:</strong> {{ novel.Author }}</p>
-          <p><strong>Genre:</strong> {{ novel.Genre }}</p>
-          <a href="{{ novel.Detail }}" class="btn btn-primary" target="_blank">Baca Novel</a>
-        </div>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="/">RESYSTEM</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/data_novel">Data Novel</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/list_novel">Kembali</a>
+          </li>
+        </ul>
       </div>
     </div>
+  </nav>
 
-    {% include "includes/footer.html" %} {% include "includes/script.html" %}
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-4">
+        <img src="{{ novel.Cover }}" alt="{{ novel.Title }}" class="img-fluid" />
+        <div class="d-flex justify-content-center mt-2">
+          <div class="btn-group" role="group">
+            <button id="like-button" class="btn btn-success mx-1">Like</button>
+            <button id="dislike-button" class="btn btn-danger mx-1">Dislike</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <p><strong>Rating:</strong></p>
+        <p class="rating">{{ novel.Rating }}</p>
+        <p><strong>Judul</strong></p>
+        <p>{{ novel.Title }}</p>
+        <p><strong>Deskripsi</strong></p>
+        <p>{{ novel.Description }}</p>
+      </div>
+      <div class="col-md-4">
+        <p><strong>Author:</strong> {{ novel.Author }}</p>
+        <p><strong>Genre:</strong> {{ novel.Genre }}</p>
+        <a href="{{ novel.Detail }}" class="btn btn-primary" target="_blank">Baca Novel</a>
+      </div>
+    </div>
+  </div>
 
-    <script>
-      // Initialize SweetAlert for the Like button
-      document.getElementById("like-button").addEventListener("click", function () {
-        Swal.fire({
-          title: "Liked!",
-          text: "You have liked this novel.",
-          icon: "success",
-          confirmButtonText: "OK",
-        });
+  {% include "includes/footer.html" %} {% include "includes/script.html" %}
+
+  <script>
+    // Initialize SweetAlert for the Like button
+    document.getElementById("like-button").addEventListener("click", function () {
+      Swal.fire({
+        title: "Liked!",
+        text: "You have liked this novel.",
+        icon: "success",
+        confirmButtonText: "OK",
       });
+    });
 
-      // Initialize SweetAlert for the Dislike button
-      document.getElementById("dislike-button").addEventListener("click", function () {
-        Swal.fire({
-          title: "Disliked!",
-          text: "You have disliked this novel.",
-          icon: "error",
-          confirmButtonText: "OK",
-        });
+    // Initialize SweetAlert for the Dislike button
+    document.getElementById("dislike-button").addEventListener("click", function () {
+      Swal.fire({
+        title: "Disliked!",
+        text: "You have disliked this novel.",
+        icon: "error",
+        confirmButtonText: "OK",
       });
-    </script>
-  </body>
+    });
+  </script>
+</body>
+
 </html>
