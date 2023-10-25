@@ -69,6 +69,7 @@ def rec_pvdbow(title, data=data):
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
     sim_scores = sim_scores[1:6]  # Get top 5 recommendations
     book_indices = [i[0] for i in sim_scores]
+    print(sim_scores)
 
     for i in book_indices:
         recommendation.at[count, 'Title'] = data['Title'].iloc[i]
