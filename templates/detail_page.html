@@ -1,62 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-{% include "includes/head.html" %}
+  {% include "includes/head.html" %}
 
-<body>
+  <body>
     {% include "includes/navbar.html" %}
 
     <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-4">
-                <img src="{{ novel.Cover }}" alt="{{ novel.Title }}" class="img-fluid">
-                <div class="d-flex justify-content-center mt-2">
-                    <div class="btn-group" role="group">
-                        <button id="like-button" class="btn btn-success mx-1">Like</button>
-                        <button id="dislike-button" class="btn btn-danger mx-1">Dislike</button>
-                    </div>
-                </div>
+      <div class="row">
+        <div class="col-md-4">
+          <img src="{{ novel.Cover }}" alt="{{ novel.Title }}" class="img-fluid" />
+          <div class="d-flex justify-content-center mt-2">
+            <div class="btn-group" role="group">
+              <button id="like-button" class="btn btn-success mx-1">Like</button>
+              <button id="dislike-button" class="btn btn-danger mx-1">Dislike</button>
             </div>
-            <div class="col-md-4">
-                <p><strong>Rating:</strong></p>
-                <p class="rating">{{ novel.Rating }}</p>
-                <p><strong>Judul</strong></p>
-                <p>{{ novel.Title }}</p>
-                <p><strong>Deskripsi</strong></p>
-                <p> {{ novel.Description }}</p>
-            </div>
-            <div class="col-md-4">
-                <p><strong>Author:</strong> {{ novel.Author }}</p>
-                <p><strong>Genre:</strong> {{ novel.Genre }}</p>
-                <a href="{{ novel.Detail }}" class="btn btn-primary" target="_blank">Baca Novel</a>
-            </div>
+          </div>
         </div>
+        <div class="col-md-4">
+          <p><strong>Rating:</strong></p>
+          <p class="rating">{{ novel.Rating }}</p>
+          <p><strong>Judul</strong></p>
+          <p>{{ novel.Title }}</p>
+          <p><strong>Deskripsi</strong></p>
+          <p>{{ novel.Description }}</p>
+        </div>
+        <div class="col-md-4">
+          <p><strong>Author:</strong> {{ novel.Author }}</p>
+          <p><strong>Genre:</strong> {{ novel.Genre }}</p>
+          <a href="{{ novel.Detail }}" class="btn btn-primary" target="_blank">Baca Novel</a>
+        </div>
+      </div>
     </div>
 
-    {% include "includes/footer.html" %}
-    {% include "includes/script.html" %}
+    {% include "includes/footer.html" %} {% include "includes/script.html" %}
 
     <script>
-        // Initialize SweetAlert for the Like button
-        document.getElementById('like-button').addEventListener('click', function () {
-            Swal.fire({
-                title: 'Liked!',
-                text: 'You have liked this novel.',
-                icon: 'success',
-                confirmButtonText: 'OK'
-            });
+      // Initialize SweetAlert for the Like button
+      document.getElementById("like-button").addEventListener("click", function () {
+        Swal.fire({
+          title: "Liked!",
+          text: "You have liked this novel.",
+          icon: "success",
+          confirmButtonText: "OK",
         });
+      });
 
-        // Initialize SweetAlert for the Dislike button
-        document.getElementById('dislike-button').addEventListener('click', function () {
-            Swal.fire({
-                title: 'Disliked!',
-                text: 'You have disliked this novel.',
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
+      // Initialize SweetAlert for the Dislike button
+      document.getElementById("dislike-button").addEventListener("click", function () {
+        Swal.fire({
+          title: "Disliked!",
+          text: "You have disliked this novel.",
+          icon: "error",
+          confirmButtonText: "OK",
         });
+      });
     </script>
-
-</body>
-
+  </body>
 </html>
