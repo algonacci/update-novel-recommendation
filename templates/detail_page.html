@@ -53,6 +53,23 @@
     </div>
   </div>
 
+  <div class="container mt-5">
+    <h3>Related Novels</h3>
+    <div class="row">
+      {% for rec_novel in recommendations %}
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <img class="card-img-top" src="{{ rec_novel['Cover'] }}" alt="{{ rec_novel['Title'] }}">
+          <div class="card-body">
+            <h5 class="card-title">{{ rec_novel['Title'] }}</h5>
+            <p class="card-text">{{ rec_novel['Description'] | truncate(100) }}</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
   {% include "includes/footer.html" %} {% include "includes/script.html" %}
 
   <script>

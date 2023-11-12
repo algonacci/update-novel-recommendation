@@ -19,13 +19,13 @@ def rekomendasi():
 @app.route("/hasil_rekomendasi", methods=["POST"])
 def hasil_rekomendasi():
     if request.method == "POST":
-        judul = request.form["judul"]
+        input_text = request.form.get("input_text")
         try:
-            recommendation = md.rec_pvdbow(title=judul)
+            recommendation = md.rec_pvdbow_by_text(input_text)
             if recommendation is not None and not recommendation.empty:
-                return render_template("hasil_rekomendasi.html", recommendation=recommendation, judul=judul)
+                return render_template("hasil_rekomendasi.html", recommendation=recommendation, input_text=input_text)
         except KeyError:
-            return render_template("rekomendasi.html", error="Judul novel yang dicari tidak ada")
+            return render_template("rekomendasi.html", error="Data untuk teks yang dimasukkan tidak ditemukan")
     else:
         return render_template("index.html")
 
@@ -61,7 +61,12 @@ def detail_page(novel_id):
     if selected_novel is None:
         return "Novel not found", 404
 
-    return render_template("detail_page.html", novel=selected_novel)
+    recommendations = md.rec_pvdbow_by_text(selected_novel['Title'])[:5]
+    recommendations = recommendations.to_dict(orient='records')
+
+    print(recommendations)
+
+    return render_template("detail_page.html", novel=selected_novel, recommendations=recommendations)
 
 
 @app.route("/data_novel")
