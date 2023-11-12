@@ -61,7 +61,7 @@ def detail_page(novel_id):
     if selected_novel is None:
         return "Novel not found", 404
 
-    recommendations = md.rec_pvdbow_by_text(selected_novel['Title'])[:5]
+    recommendations = md.rec_pvdbow_by_text(selected_novel['Title'])[:6]
     recommendations = recommendations.to_dict(orient='records')
 
     print(recommendations)
